@@ -3,6 +3,27 @@
   let hobbyInput;
   let isLoading = false;
 
+  fetch("https://svelte-http.firebaseio.com/skills.json")
+    .then(res => {
+      if (!res.ok) {
+        throw new Error("Failed!");
+      }
+      return res.json();
+    })
+    .then(data => {
+      // console.log(data);
+      hobbies = Object.values(data);
+      let keys = Object.keys(data);
+      console.log(keys);
+
+      for (const key in data) {
+        console.log(key, data[key]);
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
   function addHobby() {
     hobbies = [...hobbies, hobbyInput.value];
 
@@ -20,7 +41,7 @@
           throw new Error("Failed!");
         }
         // ...
-        alert("Saved Data");
+        // alert("Saved Data");
       })
       .catch(err => {
         isLoading = false;
